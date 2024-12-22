@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Physics Bridge Course</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@^2.0/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary: linear-gradient(to bottom right, #3c3b3b, #1d2a14);
+        --secondary: gold;
+        --text: #fff;
+      }
+
+      .videosStock {
+        min-height: 100vh;
+        background-image: var(--primary);
+        font-family: sans-serif;
+        color: var(--text);
+        display: flex;
+        align-items: center;
+      }
+
+      .container-video {
+        width: 100vw;
+        display: grid;
+        grid-template-columns: 1.8fr 1.2fr;
+        gap: 1rem;
+        padding: 0.5rem 1rem;
+        text-transform: capitalize;
+      }
+
+      @media screen and (max-width: 990px) {
+        .container-video {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .main-video,
+      .video-playlist {
+        width: 100%;
+        height: 30rem;
+      }
+
+      .main-video .title {
+        margin-top: 1rem;
+      }
+
+      .video-playlist .title {
+        padding-left: 1rem;
+      }
+
+      .video-playlist > p {
+        padding: 1rem;
+        color: var(--secondary);
+      }
+
+      .video-playlist .videos {
+        height: 70%;
+        overflow-y: auto;
+      }
+
+      .video-playlist .videos::-webkit-scrollbar {
+        width: 0.4rem;
+        border-radius: 0.4rem;
+        background-color: #0005;
+      }
+
+      .video-playlist .videos::-webkit-scrollbar-thumb {
+        border-radius: 0.4rem;
+        background-color: #fff;
+      }
+
+      .video-playlist .videos .video {
+        position: relative;
+        width: 100%;
+        height: 4rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 1rem;
+        margin-top: 0.1rem;
+        cursor: pointer;
+        border-radius: 0.5rem;
+      }
+
+      .video-playlist .videos .video:hover {
+        background-color: #0003;
+      }
+
+      .video-playlist .videos .video.active {
+        background-color: #0003;
+        color: var(--secondary);
+      }
+
+      .main-video video {
+        width: 100%;
+        border-radius: 0.5rem;
+      }
+
+      .video img {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1.5rem;
+        height: 1.5rem;
+        filter: invert(100%);
+      }
+
+      .video-playlist .videos .video.active img {
+        filter: invert(100%) sepia(100%) saturate(2000%) hue-rotate(360deg);
+      }
+
+      .video p {
+        margin-left: 2.5rem;
+      }
+
+      .video h3 {
+        width: 23rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font: 100 1rem sans-serif;
+        padding: 0 0.5rem;
+      }
+
+      /* video Screen  */
+      @media all and (max-width: 800px) {
+        .container-video {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .main-video {
+          height: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header bg-gradient-to-r from-purple-600 to-blue-600 text-white py-4">
+      <div class="container mx-auto flex justify-center lg:justify-between">
+        <nav class="flex flex-wrap justify-center lg:justify-end lg:mr-4">
+          <a href="/phy" class="block lg:inline-block lg:mt-0 mr-4 hover:text-gray-200 font-semibold text-lg">Physics</a>
+          <a href="/eng" class="block lg:inline-block lg:mt-0 mr-4 hover:text-gray-200 font-semibold text-lg">English</a>
+          <a href="/mat" class="block lg:inline-block lg:mt-0 mr-4 hover:text-gray-200 font-semibold text-lg">Math</a>
+          <a href="/che" class="block lg:inline-block lg:mt-0 mr-4 hover:text-gray-200 font-semibold text-lg">Chemistry</a>
+          <a href="/bio" class="block lg:inline-block lg:mt-0 mr-4 hover:text-gray-200 font-semibold text-lg">Biology</a>
+          <a href="/hac" class="block lg:inline-block lg:mt-0 mr-4 hover:text-gray-200 font-semibold text-lg">Hacking</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    <section class="videosStock">
+      <section class="container-video">
+        <section class="main-video">
+          <video
+            src="videos/editedPhysics/v1.mp4"
+            controls
+            autoplay
+            muted
+          ></video>
+          <h3 class="title">Title of the playing Video.</h3>
+        </section>
+
+        <section class="video-playlist">
+          <h1 style="font-size: large;font-weight:800" class="title">Physics Bridge Course Video's Playlist</h1>
+          <p>25 lessions &nbsp; . &nbsp; 11.5 hours</p>
+          <div class="videos"></div>
+        </section>
+      </section>
+    </section>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const main_video = document.querySelector(".main-video video");
+        const main_video_title = document.querySelector(".main-video .title");
+        const video_playlist = document.querySelector(
+          ".video-playlist .videos"
+        );
+        const data = [
+          {
+            id: "a1",
+            title: "Units, Measurement, And Dimensions",
+            name: "v1.mp4",
+            duration: "50:00",
+          },
+          {
+            id: "a2",
+            title: "Scalar and Vector",
+            name: "v3.mp4",
+            duration: "50:00",
+          },
+          {
+            id: "a3",
+            title: "Motion Along Straight Line",
+            name: "v4.mp4",
+            duration: "50:00",
+          },
+          {
+            id: "a4",
+            title: "Projectile Motion",
+            name: "v5.mp4",
+            duration: "50:00",
+          },
+          {
+            id: "a5",
+            title: "Newton Law of Motion",
+            name: "v6.mp4",
+            duration: "50:00",
+          },
+          { id: "a6", title: "Friction", name: "v7.mp4", duration: "50:00" },
+          {
+            id: "a7",
+            title: "Work, Energy",
+            name: "v8.mp4",
+            duration: "50:00",
+          },
+          {
+            id: "a8",
+            title: "Power and Collision",
+            name: "v9.mp4",
+            duration: "50:00",
+          },
+          {
+            id: "a9",
+            title: "Gravitation",
+            name: "v10.mp4",
+            duration: "50:00",
+          },
+          {
+            id: "a10",
+            title: "Pressure and Hydrostatics",
+            name: "v11.mp4",
+            duration: "50:00",
+          },
+          {
+            id: "a11",
+            title: "Heat and Temperature",
+            name: "v12.mp4",
+            duration: "50:00",
+          },
+          {
+            id: "a12",
+            title: "Calorimetry and Thermal Expansion",
+            name: "v13.mp4",
+            duration: "50:00",
+          },
+          {
+            id: "a13",
+            title: "Transfer of Heat",
+            name: "v14.mp4",
+            duration: "50:00",
+          },
+          { id: "a14", title: "Light", name: "v15.mp4", duration: "50:00" },
+          {
+            id: "a15",
+            title: "Reflection & Refraction of Light",
+            name: "v16.mp4",
+            duration: "50:00",
+          },
+          {
+            id: "a16",
+            title: "Dispersion of Light and Electromagnetic Waves",
+            name: "v17.mp4",
+            duration: "50:00",
+          },
+          {
+            id: "a17",
+            title: "Power of lens, Human Eye and Other Simple Instruments",
+            name: "v18.mp4",
+            duration: "50:00",
+          },
+          { id: "a18", title: "Sound", name: "v19.mp4", duration: "50:00" },
+          {
+            id: "a19",
+            title: "Charge and Components of Electric Circuit",
+            name: "v20.mp4",
+            duration: "50:00",
+          },
+          {
+            id: "a20",
+            title: "Current Electricity and Magnetism",
+            name: "v21.mp4",
+            duration: "50:00",
+          },
+          {
+            id: "a21",
+            title: "Effects of Electricity",
+            name: "v22.mp4",
+            duration: "50:00",
+          },
+          {
+            id: "a22",
+            title: "Electromagnetism and Transformer",
+            name: "v23.mp4",
+            duration: "50:00",
+          },
+          {
+            id: "a23",
+            title: "Atmosphere",
+            name: "v24.mp4",
+            duration: "50:00",
+          },
+          { id: "a24", title: "Universe", name: "v25.mp4", duration: "50:00" },
+        ];
+
+        // Populate video playlist
+        data.forEach((video, i) => {
+          let video_element = `
+                    <div class="video" data-id="${video.id}">
+                        <img src="images/play.svg" alt="">
+                        <p>${i + 1 > 9 ? i + 1 : "0" + (i + 1)}</p>
+                        <h3 class="title">${video.title}</h3>
+                        <p class="time">${video.duration}</p>
+                    </div>
+                `;
+          video_playlist.innerHTML += video_element;
+        });
+
+        const videos = document.querySelectorAll(".video");
+        videos[0].classList.add("active");
+        videos[0].querySelector("img").src = "images/pause.svg";
+
+        videos.forEach((selected_video) => {
+          selected_video.onclick = () => {
+            videos.forEach((all_videos) => {
+              all_videos.classList.remove("active");
+              all_videos.querySelector("img").src = "/images/play.svg";
+            });
+            selected_video.classList.add("active");
+            selected_video.querySelector("img").src = "/images/pause.svg";
+            let match_video = data.find(
+              (video) => video.id == selected_video.dataset.id
+            );
+            main_video.src = `videos/editedPhysics/${match_video.name}`;
+            main_video_title.innerHTML = match_video.title;
+          };
+        });
+      });
+    </script>
+  </body>
+</html>

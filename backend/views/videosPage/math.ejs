@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Math Bridge Course</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@^2.0/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary: linear-gradient(to bottom right, #3c3b3b, #1d2a14);
+        --secondary: gold;
+        --text: #fff;
+      }
+
+      .videosStock {
+        min-height: 100vh;
+        background-image: var(--primary);
+        font-family: sans-serif;
+        color: var(--text);
+        display: flex;
+        align-items: center;
+      }
+
+      .container-video {
+        width: 100vw;
+        display: grid;
+        grid-template-columns: 1.8fr 1.2fr;
+        gap: 1rem;
+        padding: 0.5rem 1rem;
+        text-transform: capitalize;
+      }
+
+      @media screen and (max-width: 990px) {
+        .container-video {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .main-video,
+      .video-playlist {
+        width: 100%;
+        height: 30rem;
+      }
+
+      .main-video .title {
+        margin-top: 1rem;
+      }
+
+      .video-playlist .title {
+        padding-left: 1rem;
+      }
+
+      .video-playlist > p {
+        padding: 1rem;
+        color: var(--secondary);
+      }
+
+      .video-playlist .videos {
+        height: 70%;
+        overflow-y: auto;
+      }
+
+      .video-playlist .videos::-webkit-scrollbar {
+        width: 0.4rem;
+        border-radius: 0.4rem;
+        background-color: #0005;
+      }
+
+      .video-playlist .videos::-webkit-scrollbar-thumb {
+        border-radius: 0.4rem;
+        background-color: #fff;
+      }
+
+      .video-playlist .videos .video {
+        position: relative;
+        width: 100%;
+        height: 4rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 1rem;
+        margin-top: 0.1rem;
+        cursor: pointer;
+        border-radius: 0.5rem;
+      }
+
+      .video-playlist .videos .video:hover {
+        background-color: #0003;
+      }
+
+      .video-playlist .videos .video.active {
+        background-color: #0003;
+        color: var(--secondary);
+      }
+
+      .main-video video {
+        width: 100%;
+        border-radius: 0.5rem;
+      }
+
+      .video img {
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1.5rem;
+        height: 1.5rem;
+        filter: invert(100%);
+      }
+
+      .video-playlist .videos .video.active img {
+        filter: invert(100%) sepia(100%) saturate(2000%) hue-rotate(360deg);
+      }
+
+      .video p {
+        margin-left: 2.5rem;
+      }
+
+      .video h3 {
+        width: 23rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font: 100 1rem sans-serif;
+        padding: 0 0.5rem;
+      }
+
+      /* video Screen  */
+      @media all and (max-width: 800px) {
+        .container-video {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .main-video {
+          height: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="header bg-gradient-to-r from-purple-600 to-blue-600 text-white py-4">
+      <div class="container mx-auto flex justify-center lg:justify-between">
+        <nav class="flex flex-wrap justify-center lg:justify-end lg:mr-4">
+          <a href="/phy" class="block lg:inline-block lg:mt-0 mr-4 hover:text-gray-200 font-semibold text-lg">Physics</a>
+          <a href="/eng" class="block lg:inline-block lg:mt-0 mr-4 hover:text-gray-200 font-semibold text-lg">English</a>
+          <a href="/mat" class="block lg:inline-block lg:mt-0 mr-4 hover:text-gray-200 font-semibold text-lg">Math</a>
+          <a href="/che" class="block lg:inline-block lg:mt-0 mr-4 hover:text-gray-200 font-semibold text-lg">Chemistry</a>
+          <a href="/bio" class="block lg:inline-block lg:mt-0 mr-4 hover:text-gray-200 font-semibold text-lg">Biology</a>
+          <a href="/hac" class="block lg:inline-block lg:mt-0 mr-4 hover:text-gray-200 font-semibold text-lg">Hacking</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    <section class="videosStock">
+      <section class="container-video">
+        <section class="main-video">
+          <video
+            src="videos/editedChemistry/v1.mp4"
+            controls
+            autoplay
+            muted
+          ></video>
+          <h3 class="title">Title of the playing Video.</h3>
+        </section>
+
+        <section class="video-playlist">
+          <h1 style="font-size: large;font-weight:800" class="title">Math Bridge Course Video's Playlist</h1>
+          <p>18 lessions &nbsp; . &nbsp; 10.5 hours</p>
+          <div class="videos"></div>
+        </section>
+      </section>
+    </section>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const main_video = document.querySelector(".main-video video");
+        const main_video_title = document.querySelector(".main-video .title");
+        const video_playlist = document.querySelector(
+          ".video-playlist .videos"
+        );
+        const data = [
+          { id: "a1", title: "Set Theory", name: "v1.mp4", duration: "46:36" },
+          { id: "a2", title: "Interest and Depreciation", name: "v2.mp4", duration: "30:54" },
+          { id: "a3", title: "Profit and Loss", name: "v3.mp4", duration: "48:22" },
+          { id: "a4", title: "Sequence and Series", name: "v4.mp4", duration: "60:45" },
+          { id: "a5", title: "Mensuration", name: "v5.mp4", duration: "60:12" },
+          { id: "a6", title: "Statistics", name: "v6.mp4", duration: "41:58" },
+          { id: "a7", title: "Polynomial Equation", name: "v7.mp4", duration: "37:35" },
+          { id: "a8", title: "Complex Numbers", name: "v8.mp4", duration: "46:03" },
+          { id: "a9", title: "Trignometry", name: "v9.mp4", duration: "100:27" },
+          { id: "a10", title: "Co-ordinate Geometry Part 1", name: "v10.mp4", duration: "60:50" },
+          { id: "a11", title: "Co-ordinate Geometry Part 2", name: "v11.mp4", duration: "37:15" },
+          { id: "a12", title: "Equations and Verbal Problems", name: "v12.mp4", duration: "57:01" },
+          { id: "a13", title: "Geometry", name: "v13.mp4", duration: "78:46" },
+          { id: "a14", title: "Limit and Continuity", name: "v14.mp4", duration: "40:40" },
+          { id: "a15", title: "Matrices and Determinants", name: "v15.mp4", duration: "60:34" },
+          { id: "a16", title: "Relations and Functions", name: "v16.mp4", duration: "60:07" },
+          { id: "a17", title: "Mixed Questions", name: "v17.mp4", duration: "49:20" },
+          { id: "a18", title: "Calculus(Derivatives and Antiderivatives)", name: "v18.mp4", duration: "41:50" },
+        ];
+
+        // Populate video playlist
+        data.forEach((video, i) => {
+          let video_element = `
+            <div class="video" data-id="${video.id}">
+                <img src="images/play.svg" alt="">
+                <p>${i + 1 > 9 ? i + 1 : "0" + (i + 1)}</p>
+                <h3 class="title">${video.title}</h3>
+                <p class="time">${video.duration}</p>
+            </div>
+        `;
+          video_playlist.innerHTML += video_element;
+        });
+
+        const videos = document.querySelectorAll(".video");
+        videos[0].classList.add("active");
+        videos[0].querySelector("img").src = "images/pause.svg";
+
+        videos.forEach((selected_video) => {
+          selected_video.onclick = () => {
+            videos.forEach((all_videos) => {
+              all_videos.classList.remove("active");
+              all_videos.querySelector("img").src = "/images/play.svg";
+            });
+            selected_video.classList.add("active");
+            selected_video.querySelector("img").src = "/images/pause.svg";
+            let match_video = data.find(
+              (video) => video.id == selected_video.dataset.id
+            );
+            main_video.src = `videos/editedMath/${match_video.name}`;
+            main_video_title.innerHTML = match_video.title;
+            main_video.play(); // Add this line to play the selected video
+          };
+        });
+
+        // Play the first video by default when the page loads
+        main_video.src = `videos/editedMath/${data[0].name}`;
+        main_video_title.innerHTML = data[0].title;
+        main_video.play();
+      });
+    </script>
+  </body>
+</html>

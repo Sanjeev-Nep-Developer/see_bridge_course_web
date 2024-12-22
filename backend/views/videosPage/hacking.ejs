@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hacking Course</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@^2.0/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: linear-gradient(to bottom right, #3c3b3b, #1d2a14);
+            --secondary: gold;
+            --text: #fff;
+        }
+
+        .videosStock {
+            min-height: 100vh;
+            background-image: var(--primary);
+            font-family: sans-serif;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+        }
+
+        .container-video {
+            width: 100vw;
+            display: grid;
+            grid-template-columns: 1.8fr 1.2fr;
+            gap: 1rem;
+            padding: 0.5rem 1rem;
+            text-transform: capitalize;
+        }
+
+        @media screen and (max-width: 990px) {
+            .container-video {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .main-video,
+        .video-playlist {
+            width: 100%;
+            height: 30rem;
+        }
+
+        .main-video .title {
+            margin-top: 1rem;
+        }
+
+        .video-playlist .title {
+            padding-left: 1rem;
+        }
+
+        .video-playlist>p {
+            padding: 1rem;
+            color: var(--secondary);
+        }
+
+        .video-playlist .videos {
+            height: 70%;
+            overflow-y: auto;
+        }
+
+        .video-playlist .videos::-webkit-scrollbar {
+            width: 0.4rem;
+            border-radius: 0.4rem;
+            background-color: #0005;
+        }
+
+        .video-playlist .videos::-webkit-scrollbar-thumb {
+            border-radius: 0.4rem;
+            background-color: #fff;
+        }
+
+        .video-playlist .videos .video {
+            position: relative;
+            width: 100%;
+            height: 4rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 1rem;
+            margin-top: 0.1rem;
+            cursor: pointer;
+            border-radius: 0.5rem;
+        }
+
+        .video-playlist .videos .video:hover {
+            background-color: #0003;
+        }
+
+        .video-playlist .videos .video.active {
+            background-color: #0003;
+            color: var(--secondary);
+        }
+
+        .main-video video {
+            width: 100%;
+            border-radius: 0.5rem;
+        }
+
+        .video img {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1.5rem;
+            height: 1.5rem;
+            filter: invert(100%);
+        }
+
+        .video-playlist .videos .video.active img {
+            filter: invert(100%) sepia(100%) saturate(2000%) hue-rotate(360deg);
+        }
+
+        .video p {
+            margin-left: 2.5rem;
+        }
+
+        .video h3 {
+            width: 23rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font: 100 1rem sans-serif;
+            padding: 0 0.5rem;
+        }
+
+        /* video Screen  */
+        @media all and (max-width: 800px) {
+            .container-video {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .main-video {
+                height: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header bg-gradient-to-r from-purple-600 to-blue-600 text-white py-4">
+        <div class="container mx-auto flex justify-center lg:justify-between">
+            <nav class="flex flex-wrap justify-center lg:justify-end lg:mr-4">
+                <a href="/phy" class="block lg:inline-block lg:mt-0 mr-4 hover:text-gray-200 font-semibold text-lg">Physics</a>
+                <a href="/eng" class="block lg:inline-block lg:mt-0 mr-4 hover:text-gray-200 font-semibold text-lg">English</a>
+                <a href="/mat" class="block lg:inline-block lg:mt-0 mr-4 hover:text-gray-200 font-semibold text-lg">Math</a>
+                <a href="/che" class="block lg:inline-block lg:mt-0 mr-4 hover:text-gray-200 font-semibold text-lg">Chemistry</a>
+                <a href="/bio" class="block lg:inline-block lg:mt-0 mr-4 hover:text-gray-200 font-semibold text-lg">Biology</a>
+                <a href="/hac" class="block lg:inline-block lg:mt-0 mr-4 hover:text-gray-200 font-semibold text-lg">Hacking</a>
+            </nav>
+        </div>
+    </div>
+
+
+    <section class="videosStock">
+        <section class="container-video">
+            <section class="main-video">
+                <video src="videos/hackingCourse/40. Overview of Trojans.mp4" controls autoplay muted></video>
+                <h3 class="title">Title of the playing Video.</h3>
+            </section>
+
+            <section class="video-playlist">
+                <h3 class="title" style="font-size: large;font-weight:800">Hacking Course Video's Playlist</h3>
+                <p>86 lessions &nbsp; . &nbsp; 19 hours</p>
+                <div class="videos"></div>
+            </section>
+        </section>
+    </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const main_video = document.querySelector(".main-video video");
+            const main_video_title = document.querySelector(".main-video .title");
+            const video_playlist = document.querySelector(".video-playlist .videos");
+
+            const data = [
+                { id: "b1", title: "NTP Enumeration", name: "100. NTP Enumeration.mp4", duration: "10:00" },
+                { id: "b2", title: "Cracking Password Using Rainbow Tables", name: "101. Cracking Password Using Rainbow Tables.mp4", duration: "10:00" },
+                { id: "b3", title: "Deploy Windows Server 2016", name: "102. Deploy Windows Server 2016.mp4", duration: "10:00" },
+                { id: "b4", title: "Network route tracing", name: "103. Network route tracing.mp4", duration: "10:00" },
+                { id: "b5", title: "SMTP Enumeration", name: "104. SMTP Enumeration.mp4", duration: "10:00" },
+                { id: "b6", title: "Adding metasploitable 2 into vmware workstation", name: "105. Adding metasploitable 2 into vmware workstation.mp4", duration: "10:00" },
+                { id: "b7", title: "Auditing Passwords Of Remote Machines", name: "106. Auditing Passwords Of Remote Machines.mp4", duration: "10:00" },
+                { id: "b8", title: "Tracing an email", name: "107. Tracing an email.mp4", duration: "10:00" },
+                { id: "b9", title: "Collect information of target website", name: "108. Collect information of target website.mp4", duration: "10:00" },
+                { id: "b10", title: "What is Ethical Hacking", name: "109. What is Ethical Hacking.mp4", duration: "10:00" },
+                { id: "b11", title: "Mirroring websites", name: "110. Mirroring websites.mp4", duration: "10:00" },
+                { id: "b12", title: "What do ethical hackers do", name: "111. What do ethical hackers do.mp4", duration: "10:00" },
+                { id: "b13", title: "Extracting company's website", name: "112. Extracting company's website.mp4", duration: "10:00" },
+                { id: "b14", title: "Information gathering - theharvester tool in kali linux", name: "113. Information gathering - theharvester tool in kali linux.mp4", duration: "10:00" },
+                { id: "b15", title: "Hacking Using Google", name: "114. Hacking Using Google.mp4", duration: "10:00" },
+                { id: "b16", title: "Building A Lab Concepts", name: "115. Building A Lab Concepts.mp4", duration: "10:00" },
+                { id: "b17", title: "Information gathering - metagoofil tool in kali linux", name: "115. Information gathering - metagoofil tool in kali linux.mp4", duration: "10:00" },
+                { id: "b18", title: "Enumeration Concepts", name: "116. Enumeration Concepts.mp4", duration: "10:00" },
+                { id: "b19", title: "Footprinting Overview", name: "117. Footprinting Overview.mp4", duration: "10:00" },
+                { id: "b20", title: "Hacking windows using metasploit and post exploitation using meterpreter", name: "118. Hacking windows using metasploit and post exploitation using meterpreter.mp4", duration: "10:00" },
+                { id: "b21", title: "Hiding Data Using White Space", name: "119. Hiding Data Using White Space.mp4", duration: "10:00" },
+                { id: "b22", title: "Hijacking HTTPS traffic", name: "120. Hijacking HTTPS traffic.mp4", duration: "10:00" },
+                { id: "b23", title: "How Web Servers Work", name: "121. How Web Servers Work.mp4", duration: "10:00" },
+                { id: "b24", title: "Introduction", name: "122. Introduction.mp4", duration: "10:00" },
+                { id: "b25", title: "Network Vulnerabilities Scanning", name: "123. Network Vulnerabilities Scanning.mp4", duration: "10:00" },
+                { id: "b26", title: "Nmap - King Of Scanner", name: "124. Nmap - King Of Scanner.mp4", duration: "10:00" },
+                { id: "b27", title: "Overview of Trojans", name: "40. Overview of Trojans.mp4", duration: "10:00" },
+                { id: "b28", title: "Password Cracking Concept", name: "41. Password Cracking Concept.mp4", duration: "10:00" },
+                { id: "b29", title: "Performing Network Scanning", name: "42. Performing Network Scanning.mp4", duration: "10:00" },
+                { id: "b30", title: "Proxy Server In Organization (Concepts)", name: "43. Proxy Server In Organization (Concepts).mp4", duration: "10:00" },
+                { id: "b31", title: "Sniffing Facebook Credentials Using Social Engineering Toolkit (SET)", name: "44. Sniffing Facebook Credentials Using Social Engineering Toolkit (SET).mp4", duration: "10:00" },
+                { id: "b32", title: "System Monitoring By Executing Application Remotely", name: "45. System Monitoring By Executing Application Remotely.mp4", duration: "10:00" },
+                { id: "b33", title: "Viewing , Enabling and Editing Audit Policy", name: "46. Viewing , Enabling and Editing Audit Policy.mp4", duration: "10:00" },
+                { id: "b34", title: "Web App Vulnerabilities Wordpress", name: "47. Web App Vulnerabilities Wordpress.mp4", duration: "10:00" },
+                { id: "b35", title: "What is DoS", name: "48. What is DoS.mp4", duration: "10:00" },
+                { id: "b36", title: "Building A Lab Concepts-Networking", name: "49. Building A Lab Concepts-Networking.mp4", duration: "10:00" },
+                { id: "b37", title: "Creating a malicious payload using SET and exploiting a windows machine", name: "50. Creating a malicious payload using SET and exploiting a windows machine.mp4", duration: "10:00" },
+                { id: "b38", title: "Creating Trojan And Launch IT - Take Control Over The Machine Using Trojan", name: "51. Creating Trojan And Launch IT - Take Control Over The Machine Using Trojan.mp4", duration: "10:00" },
+                { id: "b39", title: "DHCP Starvation Attack", name: "52. DHCP Starvation Attack.mp4", duration: "10:00" },
+                { id: "b40", title: "Exploiting client side vulnerabilities and establishing a vnc session", name: "53. Exploiting client side vulnerabilities and establishing a vnc session.mp4", duration: "10:00" },
+                { id: "b41", title: "Footprinting a target using ping", name: "54. Footprinting a target using ping.mp4", duration: "10:00" },
+                { id: "b42", title: "How Web Server Compromised", name: "55. How Web Server Compromised.mp4", duration: "10:00" },
+                { id: "b43", title: "Image Steganography", name: "56. Image Steganography.mp4", duration: "10:00" },
+                { id: "b44", title: "Network Enumeration Using NetBIOS", name: "57. Network Enumeration Using NetBIOS.mp4", duration: "10:00" },
+                { id: "b45", title: "Network Scanning Using HPING3", name: "58. Network Scanning Using HPING3.mp4", duration: "10:00" },
+                { id: "b46", title: "NTFS Alternate Data Stream Exploit", name: "59. NTFS Alternate Data Stream Exploit.mp4", duration: "10:00" },
+                { id: "b47", title: "Password Sniffing Concept", name: "60. Password Sniffing Concept.mp4", duration: "10:00" },
+                { id: "b48", title: "Performing a MITM attack and hijack session using driftnet and urlsnarf", name: "61. Performing a MITM attack and hijack session using driftnet and urlsnarf.mp4", duration: "10:00" },
+                { id: "b49", title: "Proxy Server - Proxy Switching", name: "62. Proxy Server - Proxy Switching.mp4", duration: "10:00" },
+                { id: "b50", title: "Scanning System And Network Resources", name: "63. Scanning System And Network Resources.mp4", duration: "10:00" },
+                { id: "b51", title: "What is DDoS attack", name: "64. What is DDoS attack.mp4", duration: "10:00" },
+                { id: "b52", title: "Banner Grabbing", name: "65. Banner Grabbing.mp4", duration: "10:00" },
+                { id: "b53", title: "Bypassing Firewall And Maintaining Persistent Connection With A Target Machine", name: "66. Bypassing Firewall And Maintaining Persistent Connection With A Target Machine.mp4", duration: "10:00" },
+                { id: "b54", title: "Escalating Privileges By Exploiting Client Side Vulnerabilities Part 1", name: "67. Escalating Privileges By Exploiting Client Side Vulnerabilities Part 1.mp4", duration: "10:00" },
+                { id: "b55", title: "Footprinting a target network using nslookup", name: "68. Footprinting a target network using nslookup.mp4", duration: "10:00" },
+                { id: "b56", title: "How are web server defaced", name: "69. How are web server defaced.mp4", duration: "10:00" },
+                { id: "b57", title: "Install windows 8 into vm", name: "70. Install windows 8 into vm.mp4", duration: "10:00" },
+                { id: "b58", title: "Overview Of Viruses", name: "71. Overview Of Viruses.mp4", duration: "10:00" },
+                { id: "b59", title: "Privilege Escalation Concept", name: "72. Privilege Escalation Concept.mp4", duration: "10:00" },
+                { id: "b60", title: "Proxy Server - Daisy Chaining", name: "73. Proxy Server - Daisy Chaining.mp4", duration: "10:00" },
+                { id: "b61", title: "SNMP Enumeration", name: "74. SNMP Enumeration.mp4", duration: "10:00" },
+                { id: "b62", title: "Spyware", name: "75. Spyware.mp4", duration: "10:00" },
+                { id: "b63", title: "Steganography Using OpenPuff", name: "76. Steganography Using OpenPuff.mp4", duration: "10:00" },
+                { id: "b64", title: "Types of denial of service attacks", name: "77. Types of denial of service attacks.mp4", duration: "10:00" },
+                { id: "b65", title: "Denial Of Service Attack Demo", name: "78. Denial Of Service Attack Demo.mp4", duration: "10:00" },
+                { id: "b66", title: "Escalating Privileges By Exploiting Client Side Vulnerabilities Part 2", name: "79. Escalating Privileges By Exploiting Client Side Vulnerabilities Part 2.mp4", duration: "10:00" },
+                { id: "b67", title: "Find Hidden NTFS Alternate Data Stream", name: "80. Find Hidden NTFS Alternate Data Stream.mp4", duration: "10:00" },
+                { id: "b68", title: "Hacking Web Server Demo", name: "81. Hacking Web Server Demo.mp4", duration: "10:00" },
+                { id: "b69", title: "Install windows 10 into vm", name: "82. Install windows 10 into vm.mp4", duration: "10:00" },
+                { id: "b70", title: "Password Cracking Algorithm Concept", name: "83. Password Cracking Algorithm Concept.mp4", duration: "10:00" },
+                { id: "b71", title: "People search using online tool", name: "84. People search using online tool.mp4", duration: "10:00" },
+                { id: "b72", title: "Scanning A Network Using Netscan Tool Pro", name: "85. Scanning A Network Using Netscan Tool Pro.mp4", duration: "10:00" },
+                { id: "b73", title: "SNMP Enumeration Demo", name: "86. SNMP Enumeration Demo.mp4", duration: "10:00" },
+                { id: "b74", title: "Virus Creation", name: "87. Virus Creation.mp4", duration: "10:00" },
+                { id: "b75", title: "Deploy Kali Linux", name: "88. Deploy Kali Linux.mp4", duration: "10:00" },
+                { id: "b76", title: "LDAPActive Directory Enumeration Concepts", name: "89. LDAPActive Directory Enumeration Concepts.mp4", duration: "10:00" },
+                { id: "b77", title: "Man In The Middle Attack", name: "90. Man In The Middle Attack.mp4", duration: "10:00" },
+                { id: "b78", title: "Network Topology Mapper", name: "91. Network Topology Mapper.mp4", duration: "10:00" },
+                { id: "b79", title: "People search using the online tool - part 2", name: "92. People search using the online tool - part 2.mp4", duration: "10:00" },
+                { id: "b80", title: "Analyzing domain and ip address by using smartwhois and online tool", name: "93. Analyzing domain and ip address by using smartwhois and online tool.mp4", duration: "10:00" },
+                { id: "b81", title: "Configure Static IP on Kali", name: "94. Configure Static IP on Kali.mp4", duration: "10:00" },
+                { id: "b82", title: "Dump SAM Databases - Gathering Password's Hash Value", name: "95. Dump SAM Databases - Gathering Password's Hash Value.mp4", duration: "10:00" },
+                { id: "b83", title: "LDAPActive Directory Enumeration Demo", name: "96. LDAPActive Directory Enumeration Demo.mp4", duration: "10:00" },
+                { id: "b84", title: "Analyzing domain and ip address by using kali linux os", name: "97. Analyzing domain and ip address by using kali linux os.mp4", duration: "10:00" },
+                { id: "b85", title: "Generate Rainbow Table", name: "98. Generate Rainbow Table.mp4", duration: "10:00" },
+                { id: "b86", title: "Installing Windows Server 2012 R2", name: "99. Installing Windows Server 2012 R2.mp4", duration: "10:00" }
+            ];
+
+            // Populate video playlist
+            data.forEach((video, i) => {
+                let video_element = `
+                    <div class="video" data-id="${video.id}">
+                        <img src="images/play.svg" alt="">
+                        <p>${i + 1 > 9 ? i + 1 : "0" + (i + 1)}</p>
+                        <h3 class="title">${video.title}</h3>
+                        <p class="time">${video.duration}</p>
+                    </div>
+                `;
+                video_playlist.innerHTML += video_element;
+            });
+
+            const videos = document.querySelectorAll(".video");
+            videos[0].classList.add("active");
+            videos[0].querySelector("img").src = "images/pause.svg";
+
+            videos.forEach((selected_video) => {
+                selected_video.onclick = () => {
+                    videos.forEach((all_videos) => {
+                        all_videos.classList.remove("active");
+                        all_videos.querySelector("img").src = "images/play.svg";
+                    });
+                    selected_video.classList.add("active");
+                    selected_video.querySelector("img").src = "images/pause.svg";
+                    let match_video = data.find((video) => video.id == selected_video.dataset.id);
+                    main_video.src = `videos/hackingCourse/${match_video.name}`;
+                    main_video_title.innerHTML = match_video.title;
+                };
+            });
+        });
+    </script>
+</body>
+
+</html>

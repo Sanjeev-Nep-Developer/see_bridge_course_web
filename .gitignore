@@ -1,0 +1,14 @@
+# Ignore .env file
+.env
+
+# Ignore .mp4 files
+*.mp4
+
+*.png
+
+*.svg
+
+*.jpg
+
+
+node_modules
